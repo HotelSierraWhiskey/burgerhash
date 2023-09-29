@@ -1,4 +1,4 @@
-from burgerhash import hash
+from src.burgerhash import hash
 import time
 
 
