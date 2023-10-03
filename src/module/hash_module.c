@@ -10,7 +10,8 @@ static PyObject *burgerhash(PyObject *self, PyObject *args) {
 
     hash(plaintext, length);
 
-    PyObject *result_obj = Py_BuildValue("s", plaintext);
+    PyObject *result_obj =
+        PyByteArray_FromStringAndSize(ciphertext_buffer, CIPHERTEXT_BUFFSIZE);
 
     return result_obj;
 }
