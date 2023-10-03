@@ -1,11 +1,10 @@
 #include "hash.h"
 
 #include <stdlib.h>
+#include <string.h>
+
+char ciphertext_buffer[CIPHERTEXT_BUFFSIZE];
 
 void hash(char *input_buffer, uint32_t length) {
-    for (uint32_t i = 0; i < length; i++) {
-        if (input_buffer[i] == 'A') {
-            input_buffer[i] = '9';
-        }
-    }
+    memset(ciphertext_buffer, 0, CIPHERTEXT_BUFFSIZE);
 }
