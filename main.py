@@ -1,6 +1,12 @@
 import src.burgerhash as burgerhash
+import binascii
 
 
 if __name__ == "__main__":
-    result = burgerhash.hash("I am typing a rather long string of words and I don't really know when I'm going to stop I could go on forever really weee!!")
+    result = burgerhash.hash("")
+    print("\n")
     print(result)
+    print("\n")
+    hex_string = binascii.hexlify(result).decode("utf-8")
+    print(hex_string)
+    print("\n")
