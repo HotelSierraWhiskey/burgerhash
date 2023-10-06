@@ -11,7 +11,7 @@ static PyObject *burgerhash(PyObject *self, PyObject *args) {
     hash(plaintext, length);
 
     PyObject *result_obj =
-        PyByteArray_FromStringAndSize(ciphertext_buffer, BUFFSIZE);
+        PyByteArray_FromStringAndSize(ciphertext_buffer, MESSAGE_DIGEST_SIZE);
 
     return result_obj;
 }
