@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-#define BUFFSIZE 32  // 256 bits
+#define MESSAGE_DIGEST_SIZE 32  // 256 bits
 
-extern char ciphertext_buffer[BUFFSIZE];
+extern char ciphertext_buffer[MESSAGE_DIGEST_SIZE];
 extern void hash(char *plaintext, uint32_t length);
 
 #endif
