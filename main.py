@@ -12,14 +12,12 @@ def f(x):
 
 
 if __name__ == "__main__":
-    f("")
-    f("a")
-    f("aa")
-    f("aaa")
-    f("aaaa")
-    f("aaaaa")
-
-
+    # f("")
+    f("abc")
+    f("def")
+    # f("aaa")
+    # f("aaaa")
+    # f("bsdcascvujbwneovfibweoibbobuirwbvwoeirubvjdhfbvsodijfbvwoipeurybvlidsojfbvsldkjfb")
 
     # f("b")
     # f("c")
