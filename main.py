@@ -13,8 +13,8 @@ def f(x):
 
 if __name__ == "__main__":
     # f("")
-    f("abc")
-    f("def")
+    f("a")
+    f("aa")
     # f("aaa")
     # f("aaaa")
     # f("bsdcascvujbwneovfibweoibbobuirwbvwoeirubvjdhfbvsodijfbvwoipeurybvlidsojfbvsldkjfb")
