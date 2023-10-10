@@ -1,6 +1,7 @@
 import importlib
 import os
 import sys
+import binascii
 
 
 try:
@@ -12,5 +13,10 @@ except ModuleNotFoundError as e:
     sys.exit()
 
 
-def hash(plaintext: str) -> str:
-    return _burgerhash.hash(plaintext)
+class Burgerhash:
+    def to_bytes(plaintext):
+        return _burgerhash.hash(plaintext)
+
+    def to_string(plaintext):
+        ciphertext = _burgerhash.hash(plaintext)
+        return binascii.hexlify(ciphertext).decode("utf-8")
