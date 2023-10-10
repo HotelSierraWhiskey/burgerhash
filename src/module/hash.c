@@ -57,7 +57,7 @@ static void compress_message_schedule(void) {
     memset(current_block, 0, MESSAGE_DIGEST_SIZE);
 
     char prev_char = (message_schedule[0] + schedule_table_constants[0]) >> 24;
-    for (uint8_t n = 0; n < 32; n++) {
+    for (uint8_t n = 0; n < 3; n++) {
         for (uint8_t i = 0; i < MESSAGE_DIGEST_SIZE; i++) {
             char t =
                 (sigma_0((message_schedule[i] + schedule_table_constants[i]) +
