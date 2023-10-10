@@ -14,11 +14,6 @@ char ciphertext_buffer[MESSAGE_DIGEST_SIZE];
 static char prev_block[MESSAGE_DIGEST_SIZE];
 static uint32_t message_schedule[MESSAGE_SCHEDULE_U32_SIZE];
 
-// const uint32_t initial_words[8] = {
-//     0xf401e2ae, 0xb3b24ac4, 0x53386234, 0xe020bb13,
-//     0xbef1ee13, 0xee9221b8, 0x25788afe, 0xb04c0abe,
-// };
-
 const uint32_t schedule_table_constants[32] = {
     0x37b5bb28, 0x2fcc8917, 0x95517ae9, 0x63fd610c, 0x3fec2f95, 0x61bfccb2,
     0xc55b8da1, 0x265fea33, 0x2ecd542d, 0x5d2a6235, 0xd00d9539, 0xb415b49e,
@@ -31,10 +26,6 @@ const uint32_t schedule_table_constants[32] = {
 static uint32_t sigma_0(uint32_t x) {
     return rotate_right(x, 7) ^ rotate_right(x, 18) ^ rotate_right(x, 3);
 }
-
-// static uint32_t sigma_1(uint32_t x) {
-//     return rotate_right(x, 17) ^ rotate_right(x, 19) ^ rotate_right(x, 10);
-// }
 
 static bool majority(uint8_t num) {
     uint8_t ones = 0;
@@ -70,7 +61,8 @@ static void compress_message_schedule(void) {
         for (uint8_t i = 0; i < MESSAGE_DIGEST_SIZE; i++) {
             char t =
                 (sigma_0((message_schedule[i] + schedule_table_constants[i]) +
-                         prev_char) >> 24);
+                         prev_char) >>
+                 24);
             if (majority(t)) {
                 prev_block[i] ^= (sigma_0(message_schedule[i] + prev_char));
             }
