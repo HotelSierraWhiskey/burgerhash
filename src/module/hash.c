@@ -5,14 +5,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MESSAGE_SCHEDULE_U32_SIZE MESSAGE_DIGEST_SIZE
+#define MESSAGE_SCHEDULE_256_U32_SIZE MESSAGE_DIGEST_SIZE_256
 
 #define rotate_left(n, i) ((n << i) | (n >> (32 - i)))
 #define rotate_right(n, i) ((n >> i) | (n << (32 - i)))
 
-char ciphertext_buffer[MESSAGE_DIGEST_SIZE];
-static char prev_block[MESSAGE_DIGEST_SIZE];
-static uint32_t message_schedule[MESSAGE_SCHEDULE_U32_SIZE];
+char ciphertext_buffer[MESSAGE_DIGEST_SIZE_256];
+static char prev_block[MESSAGE_DIGEST_SIZE_256];
+static uint32_t message_schedule[MESSAGE_SCHEDULE_256_U32_SIZE];
 
 const uint32_t schedule_table_constants[32] = {
     0x37b5bb28, 0x2fcc8917, 0x95517ae9, 0x63fd610c, 0x3fec2f95, 0x61bfccb2,
@@ -45,7 +45,7 @@ static void build_message_schedule(void) {
     }
 
     uint32_t w = message_schedule[0];
-    for (uint8_t i = 8; i < MESSAGE_SCHEDULE_U32_SIZE - 8; i++) {
+    for (uint8_t i = 8; i < MESSAGE_SCHEDULE_256_U32_SIZE - 8; i++) {
         w += message_schedule[i - 8];
         w = sigma_0(w);
         message_schedule[i] = w;
@@ -53,12 +53,12 @@ static void build_message_schedule(void) {
 }
 
 static void compress_message_schedule(void) {
-    char current_block[MESSAGE_DIGEST_SIZE];
-    memset(current_block, 0, MESSAGE_DIGEST_SIZE);
+    char current_block[MESSAGE_DIGEST_SIZE_256];
+    memset(current_block, 0, MESSAGE_DIGEST_SIZE_256);
 
     char prev_char = (message_schedule[0] + schedule_table_constants[0]) >> 24;
     for (uint8_t n = 0; n < 3; n++) {
-        for (uint8_t i = 0; i < MESSAGE_DIGEST_SIZE; i++) {
+        for (uint8_t i = 0; i < MESSAGE_DIGEST_SIZE_256; i++) {
             char t =
                 (sigma_0((message_schedule[i] + schedule_table_constants[i]) +
                          prev_char) >>
@@ -71,7 +71,7 @@ static void compress_message_schedule(void) {
         }
     }
 
-    memcpy(prev_block, current_block, MESSAGE_DIGEST_SIZE);
+    memcpy(prev_block, current_block, MESSAGE_DIGEST_SIZE_256);
 }
 
 static void compute(void) {
@@ -80,19 +80,20 @@ static void compute(void) {
 }
 
 void hash(char *input_buffer, uint32_t length) {
-    uint8_t padding = MESSAGE_DIGEST_SIZE - (length % MESSAGE_DIGEST_SIZE);
+    uint8_t padding =
+        MESSAGE_DIGEST_SIZE_256 - (length % MESSAGE_DIGEST_SIZE_256);
     uint32_t total_size = length + padding;
-    uint32_t n_blocks = total_size / MESSAGE_DIGEST_SIZE;
+    uint32_t n_blocks = total_size / MESSAGE_DIGEST_SIZE_256;
 
     char data_buffer[total_size];
 
     memmove(data_buffer, input_buffer, total_size);
     memset(data_buffer + (total_size - padding), 0, padding);
 
-    memset(message_schedule, 0, MESSAGE_SCHEDULE_U32_SIZE * 4);
+    memset(message_schedule, 0, MESSAGE_SCHEDULE_256_U32_SIZE * 4);
 
-    memset(prev_block, 0, MESSAGE_DIGEST_SIZE);
-    memcpy(prev_block, data_buffer, MESSAGE_DIGEST_SIZE);
+    memset(prev_block, 0, MESSAGE_DIGEST_SIZE_256);
+    memcpy(prev_block, data_buffer, MESSAGE_DIGEST_SIZE_256);
 
     memcpy(prev_block + (total_size - 4), &length, sizeof(uint32_t));
 
@@ -100,5 +101,5 @@ void hash(char *input_buffer, uint32_t length) {
         compute();
     }
 
-    memcpy(ciphertext_buffer, prev_block, MESSAGE_DIGEST_SIZE);
+    memcpy(ciphertext_buffer, prev_block, MESSAGE_DIGEST_SIZE_256);
 }
