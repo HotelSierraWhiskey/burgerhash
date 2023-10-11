@@ -10,16 +10,16 @@ static PyObject *burgerhash(PyObject *self, PyObject *args) {
 
     hash(plaintext, length);
 
-    PyObject *result_obj =
-        PyByteArray_FromStringAndSize(ciphertext_buffer, MESSAGE_DIGEST_SIZE);
+    PyObject *result_obj = PyByteArray_FromStringAndSize(
+        ciphertext_buffer, MESSAGE_DIGEST_SIZE_256);
 
     return result_obj;
 }
 
-static PyObject *version(PyObject *self) { return Py_BuildValue("s", "BETA"); }
+static PyObject *version(PyObject *self) { return Py_BuildValue("s", "0.1"); }
 
 static PyMethodDef Methods[] = {
-    {"hash", burgerhash, METH_VARARGS, "str function"},
+    {"hash", burgerhash, METH_VARARGS, "burgerhash hash function"},
     {"version", (PyCFunction)version, METH_NOARGS, "Returns the version."},
     {NULL, NULL, 0, NULL}};
 
