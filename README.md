@@ -14,7 +14,7 @@ Burgerhash is a Merkle–Damgård-based hashing algorithm. This python implement
 ```
 
 ##  🚨 Disclaimer
-This software is provided solely for educational and learning purposes. It is not suitable for production use.
+This software is provided solely for educational purposes. It is not suitable for production use.
 
 ## Features
 - Variable length input
