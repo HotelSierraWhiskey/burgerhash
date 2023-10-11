@@ -20,3 +20,6 @@ class Burgerhash:
     def to_string(plaintext):
         ciphertext = _burgerhash.hash(plaintext)
         return binascii.hexlify(ciphertext).decode("utf-8")
+
+    def version():
+        return _burgerhash.version()
